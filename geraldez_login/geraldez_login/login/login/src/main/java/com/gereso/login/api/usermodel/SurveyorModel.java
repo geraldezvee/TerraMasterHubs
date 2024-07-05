@@ -1,5 +1,8 @@
 package com.gereso.login.api.usermodel;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "Surveyors")
 public class SurveyorModel {
 
     private String id;
