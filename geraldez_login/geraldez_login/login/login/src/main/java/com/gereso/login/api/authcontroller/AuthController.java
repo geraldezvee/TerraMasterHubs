@@ -35,8 +35,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserModel newUser) {
         
-        if (newUser.getUserName() == null || newUser.getUserName().isEmpty()
-                || newUser.getPassword() == null || newUser.getPassword().isEmpty()
+        if (newUser.getPassword() == null || newUser.getPassword().isEmpty()
                 || newUser.getFirstName() == null || newUser.getFirstName().isEmpty()
                 || newUser.getLastName() == null || newUser.getLastName().isEmpty()
                 || newUser.getEmailAddress() == null || newUser.getEmailAddress().isEmpty()) {

@@ -28,7 +28,7 @@ public class UserService {
 
     public UserModel registerUser(UserModel newUser) {
         
-        if (userRepository.findByUsername(newUser.getUserName()) != null) {
+        if (userRepository.findByUsername(newUser.getEmailAddress()) != null) {
             return null; 
         }
 
