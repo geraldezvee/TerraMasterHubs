@@ -1,6 +1,5 @@
 package com.gereso.login.api.authcontroller;
 
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,6 @@ import com.gereso.login.userservice.UserService;
 
 import springfox.documentation.annotations.ApiIgnore;
 
-
 @RestController
 public class AuthController {
 
@@ -34,11 +32,10 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserModel newUser) {
-        
-        if (newUser.getPassword() == null || newUser.getPassword().isEmpty()
-                || newUser.getFirstName() == null || newUser.getFirstName().isEmpty()
-                || newUser.getLastName() == null || newUser.getLastName().isEmpty()
-                || newUser.getEmailAddress() == null || newUser.getEmailAddress().isEmpty()) {
+        if (newUser.getPassword() == null || newUser.getPassword().isEmpty() ||
+                newUser.getFirstName() == null || newUser.getFirstName().isEmpty() ||
+                newUser.getLastName() == null || newUser.getLastName().isEmpty() ||
+                newUser.getEmailAddress() == null || newUser.getEmailAddress().isEmpty()) {
             return ResponseEntity.badRequest().body("All fields are required");
         }
 
@@ -54,21 +51,20 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
-        String username = loginRequest.get("username");
+        String emailAddress = loginRequest.get("emailAddress");
         String password = loginRequest.get("password");
 
-        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-            return ResponseEntity.badRequest().body("Username and password are required");
+        if (emailAddress == null || emailAddress.isEmpty() || password == null || password.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email address and password are required");
         }
 
-        UserModel authenticatedUser = userService.authenticateUser(username, password);
+        UserModel authenticatedUser = userService.authenticateUser(emailAddress, password);
 
         if (authenticatedUser != null) {
             return ResponseEntity.ok("Login successful");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
         }
-
     }
 
     @ApiIgnore

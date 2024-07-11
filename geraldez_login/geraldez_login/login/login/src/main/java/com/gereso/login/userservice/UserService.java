@@ -18,8 +18,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserModel authenticateUser(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password);
+    public UserModel authenticateUser(String emailAddress, String password) {
+        return userRepository.findByEmailAddressAndPassword(emailAddress, password);
     }
 
     public List<UserModel> getAllUsers() {
@@ -27,9 +27,8 @@ public class UserService {
     }
 
     public UserModel registerUser(UserModel newUser) {
-        
-        if (userRepository.findByUsername(newUser.getEmailAddress()) != null) {
-            return null; 
+        if (userRepository.findByEmailAddress(newUser.getEmailAddress()) != null) {
+            return null;
         }
 
         // Save the new user
