@@ -2,7 +2,7 @@ package com.gereso.login.api.authcontroller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+// import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gereso.login.api.usermodel.LoginRequest;
 import com.gereso.login.api.usermodel.UserModel;
 import com.gereso.login.userservice.UserService;
 
@@ -50,22 +51,23 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
-        String emailAddress = loginRequest.get("emailAddress");
-        String password = loginRequest.get("password");
+public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    String emailAddress = loginRequest.getEmailAddress();
+    String password = loginRequest.getPassword();
 
-        if (emailAddress == null || emailAddress.isEmpty() || password == null || password.isEmpty()) {
-            return ResponseEntity.badRequest().body("Email address and password are required");
-        }
-
-        UserModel authenticatedUser = userService.authenticateUser(emailAddress, password);
-
-        if (authenticatedUser != null) {
-            return ResponseEntity.ok("Login successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
-        }
+    if (emailAddress == null || emailAddress.isEmpty() || password == null || password.isEmpty()) {
+        return ResponseEntity.badRequest().body("Email address and password are required");
     }
+
+    UserModel authenticatedUser = userService.authenticateUser(emailAddress, password);
+
+    if (authenticatedUser != null) {
+        return ResponseEntity.ok("Login successful");
+    } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
+    }
+}
+
 
     @ApiIgnore
     @RequestMapping(value="/")
